@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turf | Your Premier Sporting Ground</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS and Theme Configuration -->
+    <style>
+        /* Setting the default font family */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Dark Mode and Light Mode Color Scheme --- */
+        :root {
+            --background-light: #f7fafc; /* Light gray */
+            --text-light: #1a202c; /* Almost black */
+            --card-light: #ffffff;
+            --border-light: #e2e8f0;
+            --input-light: #edf2f7;
+            --primary-accent: #22c55e; /* Vibrant Green */
+            --primary-accent-hover: #16a34a;
+
+            --background-dark: #1a202c; /* Dark charcoal */
+            --text-dark: #e2e8f0; /* Light gray */
+            --card-dark: #2d3748;
+            --border-dark: #4a5568;
+            --input-dark: #4a5568;
+        }
+
+        /* Applying the color scheme */
+        .light {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
+
+        .dark {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        /* Smooth transitions for color changes */
+        body, .card, .themed-bg, .themed-text, .themed-border, .themed-input, details {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+        
+        /* --- Dynamic Navbar Style --- */
+        .header-scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .light .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        .dark .header-scrolled {
+            background-color: rgba(26, 32, 44, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        /* --- Component Styles --- */
+        .themed-bg { background-color: var(--background-light); }
+        .dark .themed-bg { background-color: var(--background-dark); }
+        
+        .card { 
+            background-color: var(--card-light);
+            border: 1px solid var(--border-light);
+        }
+        .dark .card { 
+            background-color: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .themed-border { border-color: var(--border-light); }
+        .dark .themed-border { border-color: var(--border-dark); }
+
+        .themed-input {
+            background-color: var(--input-light);
+            border-color: var(--border-light);
+        }
+        .dark .themed-input {
+            background-color: var(--input-dark);
+            border-color: var(--border-dark);
+        }
+        .themed-input:focus {
+            outline: 2px solid var(--primary-accent);
+            outline-offset: 2px;
+        }
+
+        .primary-accent-bg { background-color: var(--primary-accent); }
+        .primary-accent-bg:hover { background-color: var(--primary-accent-hover); }
+        .primary-accent-text { color: var(--primary-accent); }
+        
+        /* --- Scroll Animation --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom gradient for hero */
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.1), transparent 40%);
+        }
+        .dark .hero-gradient {
+             background: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.2), transparent 40%);
+        }
+
+        /* FAQ Accordion styles */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .arrow-down {
+            transform: rotate(180deg);
+        }
+
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden themed-bg">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 py-4 px-4 sm:px-6 lg:px-8 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <svg class="h-8 w-8 primary-accent-text" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <h1 class="text-2xl font-extrabold">Turf</h1>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#gallery" class="hover:text-green-500 transition-colors duration-300">Gallery</a>
+                <a href="#about" class="hover:text-green-500 transition-colors duration-300">About</a>
+                <a href="#pricing" class="hover:text-green-500 transition-colors duration-300">Pricing</a>
+                <a href="#location" class="hover:text-green-500 transition-colors duration-300">Location</a>
+                <a href="#testimonials" class="hover:text-green-500 transition-colors duration-300">Testimonials</a>
+                <a href="#booking" class="primary-accent-bg text-white font-medium py-2 px-4 rounded-full hover:shadow-lg transition-all duration-300">Book Now</a>
+            </nav>
+            
+            <div class="flex items-center">
+                 <!-- Theme Toggler -->
+                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Toggle theme">
+                    <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+                 <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 rounded-md focus:outline-none">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 card rounded-lg shadow-xl">
+            <nav class="flex flex-col items-center space-y-4 p-4">
+                <a href="#gallery" class="mobile-nav-link hover:text-green-500 transition-colors duration-300">Gallery</a>
+                <a href="#about" class="mobile-nav-link hover:text-green-500 transition-colors duration-300">About</a>
+                <a href="#pricing" class="mobile-nav-link hover:text-green-500 transition-colors duration-300">Pricing</a>
+                <a href="#location" class="mobile-nav-link hover:text-green-500 transition-colors duration-300">Location</a>
+                <a href="#testimonials" class="mobile-nav-link hover:text-green-500 transition-colors duration-300">Testimonials</a>
+                <a href="#booking" class="mobile-nav-link w-full text-center primary-accent-bg text-white font-medium py-2 px-4 rounded-full transition-all duration-300">Book Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="py-20 md:py-24 hero-gradient">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="reveal text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Your Ultimate Game Awaits.</h2>
+                <p class="reveal max-w-3xl mx-auto text-lg md:text-xl opacity-80 mb-10" style="transition-delay: 100ms;">
+                    Experience the best turf in town. Perfect for football, cricket, and any event. Book your slot today and play without limits.
+                </p>
+                <div class="reveal" style="transition-delay: 200ms;">
+                    <a href="#booking" class="inline-block primary-accent-bg text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        Book Your Slot Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-12 md:py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="reveal text-3xl md:text-4xl font-bold mb-4">Our Grounds</h3>
+                    <p class="reveal max-w-2xl mx-auto text-lg opacity-80" style="transition-delay: 100ms;">Pristine, all-weather turf ready for action.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="reveal">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg w-full h-full object-cover" src="https://images.unsplash.com/photo-1509077613385-f89402467146?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Football on the turf line">
+                    </div>
+                    <div class="reveal">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg w-full h-full object-cover" src="https://images.unsplash.com/photo-1532307227439-64b2c0117889?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Players in motion on the field">
+                    </div>
+                    <div class="reveal">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg w-full h-full object-cover" src="https://images.unsplash.com/photo-1495143881214-47a7d7f2e7fa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pristine empty turf from a low angle">
+                    </div>
+                    <div class="reveal">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg w-full h-full object-cover" src="https://plus.unsplash.com/premium_photo-1684446464405-71867f88356b?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bright stadium lights over the field">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About/Features Section -->
+        <section id="about" class="py-12 md:py-16 themed-bg">
+            <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                     <img src="https://images.unsplash.com/photo-1509077613385-f89402467146?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="High-quality turf under stadium lights" class="rounded-2xl shadow-2xl w-full">
+                </div>
+                <div class="reveal" style="transition-delay: 150ms;">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">Why Choose Us?</h3>
+                    <p class="opacity-80 mb-8">We're not just a field; we're a premium sporting experience. Our commitment to quality and service ensures you have the best game, every time.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                             <div class="p-3 primary-accent-bg rounded-full text-white flex-shrink-0"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                            <div>
+                                <h4 class="font-bold text-lg">24/7 Availability</h4>
+                                <p class="opacity-80">Play day or night with our state-of-the-art floodlights.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 primary-accent-bg rounded-full text-white flex-shrink-0"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg></div>
+                            <div>
+                                <h4 class="font-bold text-lg">Modern Amenities</h4>
+                                <p class="opacity-80">Clean changing rooms, refreshments, and ample parking space.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 primary-accent-bg rounded-full text-white flex-shrink-0"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+                            <div>
+                                <h4 class="font-bold text-lg">Premium FIFA-Quality Turf</h4>
+                                <p class="opacity-80">Our all-weather pitch ensures a perfect game every time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-12 md:py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="reveal text-3xl md:text-4xl font-bold mb-4">Our Pricing</h4>
+                    <p class="reveal max-w-2xl mx-auto text-lg opacity-80" style="transition-delay: 100ms;">Simple, transparent pricing for every team.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Pricing Card 1 -->
+                    <div class="reveal card rounded-2xl p-8 text-center shadow-xl border-t-4 border-green-500">
+                        <h4 class="font-extrabold text-2xl mb-2">Weekday Warriors</h4>
+                        <p class="text-4xl font-bold mb-4">₹1200<span class="text-lg font-medium opacity-70">/hr</span></p>
+                        <p class="opacity-60 mb-6">Monday - Friday<br>9 AM - 5 PM</p>
+                        <a href="#booking" class="font-bold primary-accent-text hover:underline">Book Now</a>
+                    </div>
+                    <!-- Pricing Card 2 (Featured) -->
+                    <div class="reveal card rounded-2xl p-8 text-center shadow-2xl border-t-4 border-green-500 transform scale-105">
+                         <p class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 primary-accent-bg text-white px-4 py-1 rounded-full text-sm font-bold">Most Popular</p>
+                        <h4 class="font-extrabold text-2xl mb-2">Prime Time</h4>
+                        <p class="text-4xl font-bold mb-4">₹1800<span class="text-lg font-medium opacity-70">/hr</span></p>
+                        <p class="opacity-60 mb-6">All Days<br>5 PM - 11 PM</p>
+                        <a href="#booking" class="font-bold primary-accent-text hover:underline">Book Now</a>
+                    </div>
+                    <!-- Pricing Card 3 -->
+                    <div class="reveal card rounded-2xl p-8 text-center shadow-xl border-t-4 border-green-500">
+                        <h4 class="font-extrabold text-2xl mb-2">Weekend Legends</h4>
+                        <p class="text-4xl font-bold mb-4">₹1500<span class="text-lg font-medium opacity-70">/hr</span></p>
+                        <p class="opacity-60 mb-6">Saturday - Sunday<br>9 AM - 5 PM</p>
+                        <a href="#booking" class="font-bold primary-accent-text hover:underline">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section id="location" class="py-12 md:py-16 themed-bg">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="reveal text-3xl md:text-4xl font-bold mb-4">Find Us Here</h3>
+                    <p class="reveal max-w-2xl mx-auto text-lg opacity-80" style="transition-delay: 100ms;">Ready for your next game? Visit us today.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="reveal">
+                        <div class="card rounded-2xl shadow-xl overflow-hidden h-full">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15559.54843916053!2d80.0450536735519!3d12.882855191294867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f1b437c30c3%3A0x13c23351a37a4da!2sPadappai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1678886400000!5m2!1sen!2sin" class="w-full h-full" style="border:0; min-height: 400px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 150ms;">
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="p-3 primary-accent-bg rounded-full text-white flex-shrink-0">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Address</h4>
+                                    <p class="opacity-80">No.33/3A1B1, Walajabad Road, Karasangl,<br>Padappai, Tamil Nadu</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start space-x-4">
+                                <div class="p-3 primary-accent-bg rounded-full text-white flex-shrink-0">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Operating Hours</h4>
+                                    <p class="opacity-80">Open 24 Hours, 7 Days a Week</p>
+                                </div>
+                            </div>
+                            <div class="pt-4">
+                               <a href="https://www.google.com/maps/search/?api=1&query=No.33%2F3A1B1%2C+Walajabad+Road%2C+Karasangl%2C+Padappai%2C+Tamil+Nadu" target="_blank" class="inline-block primary-accent-bg text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                                    Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-12 md:py-16">
+             <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="reveal text-3xl md:text-4xl font-bold mb-4">What Players Say</h4>
+                    <p class="reveal max-w-2xl mx-auto text-lg opacity-80" style="transition-delay: 100ms;">Don't just take our word for it.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="reveal card p-8 rounded-2xl flex flex-col">
+                        <p class="mb-6 opacity-80 flex-grow">"The best turf I've played on in Puducherry. The pitch is perfect and the floodlights are brilliant for night games. Highly recommended!"</p>
+                        <div class="flex items-center mt-auto">
+                            <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1495143881214-47a7d7f2e7fa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Photo of Arjun Sharma">
+                            <div class="ml-4">
+                                <div class="font-bold">Arjun Sharma</div>
+                                <div class="flex text-yellow-400 text-sm">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="reveal card p-8 rounded-2xl flex flex-col">
+                        <p class="mb-6 opacity-80 flex-grow">"Booking was super easy and the staff were very helpful. Our team has made this our regular spot for practice sessions."</p>
+                        <div class="flex items-center mt-auto">
+                            <img class="h-12 w-12 rounded-full object-cover" src="https://plus.unsplash.com/premium_photo-1684446464405-71867f88356b?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Photo of Priya Nair">
+                            <div class="ml-4">
+                                <div class="font-bold">Priya Nair</div>
+                                <div class="flex text-yellow-400 text-sm">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="reveal card p-8 rounded-2xl flex flex-col">
+                        <p class="mb-6 opacity-80 flex-grow">"Great facilities and very well-maintained. The online booking process through WhatsApp was seamless. Will definitely be back!"</p>
+                        <div class="flex items-center mt-auto">
+                            <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1509077613385-f89402467146?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Photo of Rohan Gupta">
+                            <div class="ml-4">
+                                <div class="font-bold">Rohan Gupta</div>
+                                <div class="flex text-yellow-400 text-sm">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section id="faq" class="py-12 md:py-16 themed-bg">
+            <div class="container mx-auto px-4 max-w-3xl">
+                <div class="text-center mb-16">
+                    <h3 class="reveal text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="reveal card rounded-lg">
+                        <details class="p-6">
+                            <summary class="font-bold cursor-pointer flex justify-between items-center">
+                                <span>Can we rent equipment like footballs and bibs?</span>
+                                <svg class="h-6 w-6 arrow-down transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </summary>
+                            <p class="mt-4 opacity-80">Yes, we offer footballs, bibs, and cones for a nominal rental fee. Please inquire at the reception when you arrive.</p>
+                        </details>
+                    </div>
+                    <div class="reveal card rounded-lg">
+                         <details class="p-6">
+                            <summary class="font-bold cursor-pointer flex justify-between items-center">
+                                <span>Is there parking available?</span>
+                                <svg class="h-6 w-6 arrow-down transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </summary>
+                            <p class="mt-4 opacity-80">Absolutely! We have ample free parking space available for cars and two-wheelers for all our guests.</p>
+                        </details>
+                    </div>
+                    <div class="reveal card rounded-lg">
+                         <details class="p-6">
+                            <summary class="font-bold cursor-pointer flex justify-between items-center">
+                                <span>What is your cancellation policy?</span>
+                                <svg class="h-6 w-6 arrow-down transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </summary>
+                            <p class="mt-4 opacity-80">You can cancel your booking up to 24 hours in advance for a full refund. Cancellations made within 24 hours of the slot time are non-refundable.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Booking Section -->
+        <section id="booking" class="py-12 md:py-16">
+            <div class="max-w-md w-full mx-auto px-4">
+                <div class="card rounded-2xl p-8 shadow-2xl reveal">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-extrabold">Book Your Slot</h2>
+                        <p class="mt-2 opacity-70">Fill in the details below to reserve your time.</p>
+                    </div>
+                    <form id="booking-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="font-medium text-sm">Full Name</label>
+                            <input type="text" id="name" name="name" required class="w-full mt-2 px-4 py-3 rounded-lg themed-input border focus:outline-none transition-shadow" placeholder="e.g., Alex Johnson">
+                        </div>
+                        <div>
+                            <label for="date" class="font-medium text-sm">Date</label>
+                            <input type="date" id="date" name="date" required class="w-full mt-2 px-4 py-3 rounded-lg themed-input border focus:outline-none transition-shadow">
+                        </div>
+                        <div>
+                            <label for="time-slot" class="font-medium text-sm">Time Slot</label>
+                            <select id="time-slot" name="time-slot" required class="w-full mt-2 px-4 py-3 rounded-lg themed-input border focus:outline-none transition-shadow appearance-none">
+                                <option value="" disabled selected>Select a time</option>
+                                <option value="06:00 AM - 07:00 AM">06:00 AM - 07:00 AM</option>
+                                <option value="07:00 AM - 08:00 AM">07:00 AM - 08:00 AM</option>
+                                <option value="08:00 AM - 09:00 AM">08:00 AM - 09:00 AM</option>
+                                <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+                                <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                                <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+                                <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
+                                <option value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</option>
+                                <option value="06:00 PM - 07:00 PM">06:00 PM - 07:00 PM</option>
+                                <option value="07:00 PM - 08:00 PM">07:00 PM - 08:00 PM</option>
+                                <option value="08:00 PM - 09:00 PM">08:00 PM - 09:00 PM</option>
+                                <option value="09:00 PM - 10:00 PM">09:00 PM - 10:00 PM</option>
+                                <option value="10:00 PM - 11:00 PM">10:00 PM - 11:00 PM</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="players" class="font-medium text-sm">Number of Players</label>
+                            <input type="number" id="players" name="players" min="1" max="22" required class="w-full mt-2 px-4 py-3 rounded-lg themed-input border focus:outline-none transition-shadow" placeholder="e.g., 10">
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full primary-accent-bg text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 12c0 1.76.46 3.45 1.32 4.95L2 22l5.25-1.42c1.45.77 3.09 1.17 4.79 1.17h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zM12.05 3.67c4.55 0 8.24 3.69 8.24 8.24s-3.69 8.24-8.24 8.24h-.01c-1.55 0-3.05-.42-4.36-1.22l-.31-.18-3.24.88.89-3.15-.2-.32c-.86-1.35-1.31-2.9-1.31-4.51 0-4.55 3.7-8.24 8.25-8.24zm-1.01 5.48l-1.47 2.9c-.11.21-.01.48.2.59l.7.42c.1.06.14.18.1.29l-.24.58c-.04.11.02.24.13.29s.24-.02.29-.13l.83-1.41c.05-.09.16-.11.24-.05l.55.37c.09.06.12.18.06.27l-.68 1.18c-.06.1-.03.23.08.28l1.45.62c.11.05.24-.02.28-.13l.11-.29c.01-.01.01-.02 0 0l2.05-4.41c.07-.15-.02-.33-.19-.39l-1.45-.51c-.1-.04-.21.01-.26.11l-.76 1.38c-.04.07-.14.1-.21.05l-.56-.37c-.07-.05-.1-.15-.05-.22l1.09-1.87c.07-.12.02-.28-.11-.35l-1.45-.62c-.12-.05-.26.02-.31.14z"></path></svg>
+                                <span>Book on WhatsApp</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="themed-bg border-t themed-border">
+        <div class="container mx-auto px-4 py-12 text-center">
+            <p class="font-bold text-lg mb-2">Turf</p>
+            <p class="text-sm opacity-70 mb-4">Your Premier Sporting Ground</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="hover:opacity-70 transition-opacity"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98-3.56-.18-6.72-1.88-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.8 1.92 3.57-.7-.02-1.36-.22-1.94-.54v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84c-.35 0-.69-.02-1.03-.06C3.44 20.29 5.7 21 8.12 21c7.34 0 11.35-6.08 11.35-11.35 0-.17 0-.34-.01-.51.78-.57 1.45-1.27 1.99-2.08z"/></svg></a>
+                <a href="#" class="hover:opacity-70 transition-opacity"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.802C8.84 3.965 8.542 3.977 7.284 4.04c-2.522.115-3.611 1.205-3.725 3.725-.063 1.258-.075 1.556-.075 4.235s.012 2.977.075 4.235c.114 2.522 1.203 3.61 3.725 3.725 1.258.063 1.556.075 4.716.075s3.458-.012 4.716-.075c2.522-.114 3.61-1.203 3.725-3.725.063-1.258.075-1.556.075-4.235s-.012-2.977-.075-4.235c-.115-2.522-1.204-3.611-3.725-3.725-1.258-.063-1.556-.075-4.716-.075zm0 4.232a3.797 3.797 0 1 0 0 7.594 3.797 3.797 0 0 0 0-7.594zm0 1.802a1.995 1.995 0 1 1 0 3.99 1.995 1.995 0 0 1 0-3.99zM16.95 6.502a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
+                <a href="#" class="hover:opacity-70 transition-opacity"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.114 17.625V12.16H8.723V9.75h2.163V7.93c0-2.023 1.13-3.18 3.215-3.18.91 0 1.88.16 1.88.16l-.002 2.29h-1.26c-1.023 0-1.12.52-1.12 1.15v1.4h2.46l-.375 2.41h-2.085v5.465h-2.97z"/></svg></a>
+            </div>
+            <div class="mt-4 pt-4 border-t themed-border text-sm opacity-60">
+                <p>&copy; 2025 Turf Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- THEME TOGGLER SCRIPT ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+            html.classList.remove('light');
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        } else {
+            html.classList.add('light');
+            html.classList.remove('dark');
+            lightIcon.classList.remove('hidden');
+            darkIcon.classList.add('hidden');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                html.classList.add('dark');
+                html.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+        });
+        
+        // --- DYNAMIC NAVBAR SCRIPT ---
+        const header = document.getElementById('header');
+        window.onscroll = function() {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        };
+        
+        // --- MOBILE MENU SCRIPT ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // --- SCROLL ANIMATION SCRIPT ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach(el => observer.observe(el));
+
+        // --- WHATSAPP REDIRECTION SCRIPT ---
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const businessPhoneNumber = '911234567890'; // IMPORTANT: Replace with client's number
+
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            const timeSlot = document.getElementById('time-slot').value;
+            const players = document.getElementById('players').value;
+
+            const formattedDate = new Date(date).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            let message = Hello Turf! I'd like to book a slot.\n\n;
+            message += *Name:* ${name}\n;
+            message += *Date:* ${formattedDate}\n;
+            message += *Time Slot:* ${timeSlot}\n;
+            message += *Number of Players:* ${players}\n\n;
+            message += Please confirm availability. Thank you!;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = https://wa.me/${businessPhoneNumber}?text=${encodedMessage};
+            window.open(whatsappURL, '_blank');
+        });
+
+        // Set min date for date input to today
+        document.getElementById('date').min = new Date().toISOString().split("T")[0];
+    </script>
+</body>
+</html>
