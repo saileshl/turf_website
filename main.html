@@ -581,15 +581,15 @@
                 day: 'numeric', month: 'long', year: 'numeric'
             });
 
-            let message = Hello Turf! I'd like to book a slot.\n\n;
-            message += *Name:* ${name}\n;
-            message += *Date:* ${formattedDate}\n;
-            message += *Time Slot:* ${timeSlot}\n;
-            message += *Number of Players:* ${players}\n\n;
-            message += Please confirm availability. Thank you!;
+            let message = `Hello Turf! I'd like to book a slot.\n\n`;
+            message += `*Name:* ${name}\n`;
+            message += `*Date:* ${formattedDate}\n`;
+            message += `*Time Slot:* ${timeSlot}\n`;
+            message += `*Number of Players:* ${players}\n\n`;
+            message += `Please confirm availability. Thank you!`;
 
             const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = https://wa.me/${businessPhoneNumber}?text=${encodedMessage};
+            const whatsappURL = `https://wa.me/${businessPhoneNumber}?text=${encodedMessage}`;
             window.open(whatsappURL, '_blank');
         });
 
@@ -598,3 +598,6 @@
     </script>
 </body>
 </html>
+
+
+
